@@ -34,18 +34,45 @@ class Reseau:
         self.strat = strat
 
     def valider_reseau(self) -> bool:
-        # TODO
-        return False
+        if self.noeud_entree == -1:
+         return False
 
     def valider_distribution(self, t: Terrain) -> bool:
-        # TODO
-        return False
+        clients_couverts = set() 
+
+        for key, coords in self.noeuds.items(): 
+
+            x, y = coords 
+
+            if t.cases[x][y] == Case.CLIENT: 
+
+                clients_couverts.add((x, y)) 
+                # Positions des clients 
+
+        all_clients = {(x, y) for x, row in enumerate(t.cases) for y, case in enumerate(row) if case == Case.CLIENT} 
+
+ 
+        return clients_couverts == all_clients
 
     def configurer(self, t: Terrain):
         self.noeud_entree, self.noeuds, self.arcs  = self.strat.configurer(t)
 
     def afficher(self) -> None:
-        # TODO
+        print("Réseau électrique :") 
+
+        print(f"Noeud d'entrée : {self.noeud_entree}") 
+
+        print("Noeuds :") 
+
+        for key, coords in self.noeuds.items(): 
+
+            print(f"  {key}: {coords}") 
+
+        print("Arcs :") 
+
+        for arc in self.arcs: 
+
+            print(f"  {arc}")
         pass
 
     def afficher_avec_terrain(self, t: Terrain) -> None:
